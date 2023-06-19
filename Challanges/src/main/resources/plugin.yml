@@ -1,0 +1,7 @@
+name: ${project.name}
+author: Pascal K.
+main: de.pascxl.challanges.Main
+api-version: "1.20"
+version: ${project.version}
+website: www.pascxl.de
+description: A challanges plugin like BastiGHG and other youtuber
