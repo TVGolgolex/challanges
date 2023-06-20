@@ -20,12 +20,12 @@ public class Backpack {
 
     public Backpack(UUID uuid) {
         this.uuid = uuid;
-        this.inventory = Bukkit.createInventory(null, 54, MiniMessage.miniMessage().deserialize("<gradient:#a95dc0:#6f7bf2>Backpack"));
+        this.inventory = Bukkit.createInventory(null, 54, MiniMessage.miniMessage().deserialize("<gradient:#F931EC:#6f7bf2>Backpack"));
     }
 
     public Backpack(UUID uuid, String base64) throws IOException {
         this.uuid = uuid;
-        this.inventory = Bukkit.createInventory(null, 54, MiniMessage.miniMessage().deserialize("<gradient:#a95dc0:#6f7bf2>Backpack"));
+        this.inventory = Bukkit.createInventory(null, 54, MiniMessage.miniMessage().deserialize("<gradient:#F931EC:#6f7bf2>Backpack"));
         this.inventory.setContents(Base64.itemStackArrayFromBase64(base64));
     }
 

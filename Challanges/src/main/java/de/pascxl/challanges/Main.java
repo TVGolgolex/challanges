@@ -1,14 +1,23 @@
 package de.pascxl.challanges;
 
 import de.pascxl.challanges.backpack.BackpackManager;
+import de.pascxl.challanges.coloring.Coloring;
+import de.pascxl.challanges.coloring.ColoringConfig;
+import de.pascxl.challanges.coloring.ColoringConverter;
 import de.pascxl.challanges.command.CommandBackpack;
 import de.pascxl.challanges.command.CommandChallange;
+import de.pascxl.challanges.command.CommandColor;
 import de.pascxl.challanges.command.CommandTimer;
 import de.pascxl.challanges.modules.ModuleHandler;
 import de.pascxl.challanges.utils.AnsiColor;
+import de.pascxl.challanges.utils.config.InvalidConfigurationException;
+import de.pascxl.challanges.utils.config.InvalidConverterException;
 import lombok.Getter;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
+import java.util.UUID;
 import java.util.logging.Level;
 
 /**
@@ -23,6 +32,8 @@ public class Main extends JavaPlugin {
     private ModuleHandler moduleHandler;
 
     private BackpackManager backpackManager;
+
+    private ColoringConfig coloringConfig;
 
     @Override
     public void onEnable() {
@@ -56,9 +67,19 @@ public class Main extends JavaPlugin {
 
         this.moduleHandler = new ModuleHandler();
         this.backpackManager = new BackpackManager();
+
+        this.coloringConfig = new ColoringConfig(new File(this.getDataFolder(), "coloring.yml"));
+        try {
+            coloringConfig.addConverter(ColoringConverter.class);
+            coloringConfig.init();
+        } catch (InvalidConfigurationException | InvalidConverterException e) {
+            e.printStackTrace();
+        }
+
         this.getServer().getCommandMap().register(this.getName(), new CommandChallange());
         this.getServer().getCommandMap().register(this.getName(), new CommandTimer());
         this.getServer().getCommandMap().register(this.getName(), new CommandBackpack());
+        this.getServer().getCommandMap().register(this.getName(), new CommandColor());
     }
 
     @Override
@@ -94,4 +115,12 @@ public class Main extends JavaPlugin {
         this.moduleHandler.getActiveModule().terminate();
 
     }
+
+    public Coloring getColoring(UUID uuid) {
+        if (!this.coloringConfig.getColoringMap().containsKey(uuid.toString())) {
+            return new Coloring("#F931EC", "#6f7bf2", NamedTextColor.LIGHT_PURPLE);
+        }
+        return this.coloringConfig.getColoringMap().get(uuid.toString());
+    }
+
 }

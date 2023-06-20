@@ -47,6 +47,24 @@ public class CommandChallange extends Command {
                     }
 
                     return true;
+                } else if (strings[0].equalsIgnoreCase("run")) {
+
+                    if (Main.getInstance().getModuleHandler().getActiveModule() == null) {
+                        commandSender.sendMessage(Component.text(
+                                "§cEs kann nicht gestartet werden, da kein Module ausgewählt ist."));
+                        return false;
+                    }
+
+                    try {
+                        Main.getInstance().getModuleHandler().getActiveModule().initial();
+                        Main.getInstance().getModuleHandler().getActiveModule().loadFromConfig();
+                        commandSender.sendMessage(Component.text("§aDas Modul wurde fortgesetzt."));
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                        commandSender.sendMessage(Component.text("§cEs ist ein Fehler aufgetreten!"));
+                    }
+
+                    return true;
                 }
 
                 IModule iModule = Main.getInstance().getModuleHandler().getModules().stream().filter(iModule1 -> iModule1.getClass().getSimpleName().equalsIgnoreCase(
@@ -59,7 +77,6 @@ public class CommandChallange extends Command {
 
                 Main.getInstance().getModuleHandler().setActiveModule(iModule);
                 commandSender.sendMessage(Component.text("§aNeues Module ausgewählt!").append(Component.text(" §7[§e/challange start§7]")));
-
             }
         }
 
