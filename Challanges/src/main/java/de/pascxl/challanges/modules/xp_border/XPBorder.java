@@ -4,6 +4,7 @@ import de.pascxl.challanges.Main;
 import de.pascxl.challanges.coloring.Coloring;
 import de.pascxl.challanges.modules.IModule;
 import de.pascxl.challanges.utils.Base64;
+import de.pascxl.challanges.utils.TablistPrefixUtil;
 import lombok.Getter;
 import lombok.Setter;
 import net.kyori.adventure.text.Component;
@@ -72,20 +73,23 @@ public class XPBorder implements IModule {
             if (!this.paused) {
                 seconds++;
             }
+
             for (Player all : Bukkit.getOnlinePlayers()) {
                 Coloring coloring = Main.getInstance().getColoring(all.getUniqueId());
                 all.sendActionBar(MiniMessage.miniMessage().deserialize("<gradient:" + coloring.getFirstGradientColor() + ":" + coloring.getSecondGradientColor() + "><b>" + (
                         this.paused ?
                                 "Timer pausiert" : this.getIntToTime(this.seconds))));
                 all.sendPlayerListHeaderAndFooter(
-                        MiniMessage.miniMessage().deserialize("\n<gradient:" + coloring.getFirstGradientColor() + ":" + coloring.getSecondGradientColor() + "><b>CLAYMC.NET</gradient></b>\n<gray>Event<dark_gray>: <" + coloring.getFirstGradientColor() + ">XPBorder\n"),
+                        MiniMessage.miniMessage().deserialize("\n<gradient:" + coloring.getFirstGradientColor() + ":" + coloring.getSecondGradientColor() + "><b>CLAYMC.NET</b></gradient>\n<gray>Event<dark_gray>: <" + coloring.getFirstGradientColor() + ">XPBorder\n"),
                         MiniMessage.miniMessage().deserialize("\n<gradient:" + coloring.getFirstGradientColor() + ":" + coloring.getSecondGradientColor() + "><b>" + (
                                 this.paused ?
                                         "Timer pausiert" : this.getIntToTime(this.seconds)) + "\n")
                 );
             }
 
-        }, 0, 20);
+            TablistPrefixUtil.getInstance().setPrefix();
+
+        }, 0, 30);
 
         this.xpBorderConfig = new XPBorderConfig(new File(Main.getInstance().getDataFolder(), "xpborder.yml"));
         try {

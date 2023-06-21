@@ -2,6 +2,7 @@ package de.pascxl.challanges.modules.xp_border;
 
 import de.pascxl.challanges.Main;
 import de.pascxl.challanges.coloring.Coloring;
+import de.pascxl.challanges.utils.Base64;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
@@ -61,6 +62,7 @@ public class PlayerListener implements Listener {
         XPBorder xpBorder = Main.getInstance().getModuleHandler().getActiveModule();
         event.getPlayer().setGlowing(true);
         event.getPlayer().setLevel(xpBorder.getDistance());
+
     }
 
     @EventHandler

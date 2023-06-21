@@ -4,12 +4,10 @@ import de.pascxl.challanges.backpack.BackpackManager;
 import de.pascxl.challanges.coloring.Coloring;
 import de.pascxl.challanges.coloring.ColoringConfig;
 import de.pascxl.challanges.coloring.ColoringConverter;
-import de.pascxl.challanges.command.CommandBackpack;
-import de.pascxl.challanges.command.CommandChallange;
-import de.pascxl.challanges.command.CommandColor;
-import de.pascxl.challanges.command.CommandTimer;
+import de.pascxl.challanges.command.*;
 import de.pascxl.challanges.modules.ModuleHandler;
 import de.pascxl.challanges.utils.AnsiColor;
+import de.pascxl.challanges.utils.TablistPrefixUtil;
 import de.pascxl.challanges.utils.config.InvalidConfigurationException;
 import de.pascxl.challanges.utils.config.InvalidConverterException;
 import lombok.Getter;
@@ -76,10 +74,13 @@ public class Main extends JavaPlugin {
             e.printStackTrace();
         }
 
+        new TablistPrefixUtil();
+
         this.getServer().getCommandMap().register(this.getName(), new CommandChallange());
         this.getServer().getCommandMap().register(this.getName(), new CommandTimer());
         this.getServer().getCommandMap().register(this.getName(), new CommandBackpack());
         this.getServer().getCommandMap().register(this.getName(), new CommandColor());
+        this.getServer().getCommandMap().register(this.getName(), new CommandGive());
     }
 
     @Override
